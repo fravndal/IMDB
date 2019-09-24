@@ -29,10 +29,10 @@ namespace Import.Core
             this.movieTable = movieTable;
             this.genreTable = genreTable;
             this.movieGenreTable = movieGenreTable;
-            this.dataTableMovie = new DataTable(movieTable);
-            this.dataTableGenre = new DataTable(genreTable);
-            this.dataTableMovieGenre = new DataTable(movieGenreTable);
-            this.recordCount = 0;
+            dataTableMovie = new DataTable(movieTable);
+            dataTableGenre = new DataTable(genreTable);
+            dataTableMovieGenre = new DataTable(movieGenreTable);
+            recordCount = 0;
             this.commitBatchSize = commitBatchSize;
             // add columns to this data table
             InitializeStructures();
@@ -41,7 +41,6 @@ namespace Import.Core
         // Set how many rows to insert at a time
         private BulkUploadToSql() : this("Movies", "Genres", "MovieGenres", 50000)
         { }
-        
 
         private void InitializeStructures()
         {
@@ -49,8 +48,6 @@ namespace Import.Core
             this.dataTableGenre.GenreStructure();
             this.dataTableMovieGenre.MovieGenreStructure();
         }
-
-        
 
         public static BulkUploadToSql Load(StreamReader dataSource)
         {
@@ -73,9 +70,6 @@ namespace Import.Core
             }
             return o;
         }
-
-        
-
 
         private void PopulateMoviesTable(Movie record)
         {
@@ -141,7 +135,6 @@ namespace Import.Core
         private void WriteToDatabase()
         {
             string connString = GetDbString();
-
             
             using (SqlConnection connection = new SqlConnection(connString))
             {
@@ -166,10 +159,6 @@ namespace Import.Core
 
             this.recordCount = 0;
         }
-
-
-
-
 
         private string GetDbString()
         {
