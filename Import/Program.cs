@@ -13,23 +13,17 @@ namespace Import
 {
     class Program
     {
-        //private static IMDBDbContext _context;
-
         static void Main(string[] args)
         {
-            string fileName = @"C:\Users\%USERPROFILE%\Dropbox\projects\CSHARP\IMDB\Import\Data\data.tsv";
+            string path = Environment.CurrentDirectory;
+            string fileName = "data.tsv";
+            string pathToFilename = path + @"\Data\" + fileName;
 
-            using (StreamReader s = new StreamReader(fileName))
+            using (StreamReader s = new StreamReader(pathToFilename))
             {
                 BulkUploadToSql myData = BulkUploadToSql.Load(s);
                 myData.Flush();
             }
-
         }
-
-
-
-
-        
     }
 }
