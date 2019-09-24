@@ -357,5 +357,5 @@ Migrations/
 data.tsv
 
 # demotext
-IMDB/demo.txt
+/demo.txt
 
