@@ -17,7 +17,7 @@ namespace Import
 
         static void Main(string[] args)
         {
-            string fileName = @"C:\Users\lqk\Dropbox\projects\CSHARP\IMDB\Import\Data\data.tsv";
+            string fileName = @"C:\Users\%USERPROFILE%\Dropbox\projects\CSHARP\IMDB\Import\Data\data.tsv";
 
             using (StreamReader s = new StreamReader(fileName))
             {
