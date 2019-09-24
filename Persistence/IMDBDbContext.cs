@@ -12,7 +12,7 @@ namespace Persistence
 
         public IMDBDbContext(DbContextOptions<IMDBDbContext> options) : base(options)
         {
-            //Database.Migrate();
+            Database.Migrate();
         }
 
         public IMDBDbContext()
