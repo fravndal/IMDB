@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Persistence;
 using System;
+using System.IO;
 using System.Linq;
 
 namespace Testing
@@ -19,7 +20,11 @@ namespace Testing
 
             //GetGenres();
             //GetGenre();
-            GetGenresWildcard();
+            //GetGenresWildcard();
+            var test = @"\Data\";
+
+            Console.WriteLine(Environment.CurrentDirectory+test);
+            
         }
 
         private static void GetGenresWildcard()
