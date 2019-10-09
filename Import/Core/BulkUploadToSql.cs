@@ -1,5 +1,4 @@
 ﻿using Domain;
-using Microsoft.Extensions.Configuration;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
@@ -34,11 +33,9 @@ namespace Import.Core
             dataTableMovieGenre = new DataTable(movieGenreTable);
             recordCount = 0;
             this.commitBatchSize = commitBatchSize;
-            // add columns to this data table
             InitializeStructures();
         }
 
-        // Set how many rows to insert at a time
         private BulkUploadToSql() : this("Movies", "Genres", "MovieGenres", 50000)
         { }
 
@@ -51,7 +48,6 @@ namespace Import.Core
 
         public static BulkUploadToSql Load(StreamReader dataSource)
         {
-            // create a new object to return
             BulkUploadToSql o = new BulkUploadToSql();
 
             for (int i = 0; !dataSource.EndOfStream; i++)
@@ -134,7 +130,8 @@ namespace Import.Core
 
         private void WriteToDatabase()
         {
-            string connString = GetDbString();
+            DbConnection db = new DbConnection();
+            string connString = db.GetDbString();
             
             using (SqlConnection connection = new SqlConnection(connString))
             {
@@ -158,21 +155,6 @@ namespace Import.Core
             this.dataTableMovieGenre.Clear();
 
             this.recordCount = 0;
-        }
-
-        private string GetDbString()
-        {
-            var builder = new ConfigurationBuilder()
-               .SetBasePath(Directory.GetCurrentDirectory())
-               .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true)
-               .AddUserSecrets<Program>()
-               .AddEnvironmentVariables();
-
-            IConfigurationRoot configuration = builder.Build();
-            var mySettingsConfig = new MySettingsConfig();
-            configuration.GetSection("MySettings").Bind(mySettingsConfig);
-
-            return configuration.GetConnectionString("IMDBDb");
         }
     }
 }

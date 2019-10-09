@@ -1,13 +1,6 @@
 ﻿using Import.Core;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.DependencyInjection;
-using Persistence;
 using System.IO;
 using System;
-using StartImport = Import.Core;
-using System.Linq;
-using Domain;
-using Microsoft.Extensions.Configuration;
 
 namespace Import
 {

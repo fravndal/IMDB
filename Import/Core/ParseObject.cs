@@ -1,9 +1,6 @@
 ﻿using Domain;
-using System;
 using System.Collections.Generic;
-using System.Text;
 using System.Linq;
-using Persistence;
 
 namespace Import.Core
 {
@@ -43,7 +40,6 @@ namespace Import.Core
             var genres = column[8].Split(",");
             foreach (var genre in genres)
             {
-                //Add if genre dont exists
                 if (!internalGenreList.Any(x => x.Name == genre))
                 {
                     var id = internalGenreList.Count() + 1;
