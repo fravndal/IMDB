@@ -1,10 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace Import.Core
+﻿namespace Import.Core
 {
-    public class MySettingsConfig
+    public class SettingsConfig
     {
         public string AccountName { get; set; }
         public string ApiKey { get; set; }
