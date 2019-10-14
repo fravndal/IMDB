@@ -1,14 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 using AutoMapper;
-using IMDB.Api.Models;
-using IMDB.Api.Services;
-using Microsoft.AspNetCore.Http;
+using Api.Models;
+using Api.Services;
 using Microsoft.AspNetCore.Mvc;
 
-namespace IMDB.Api.Controllers
+namespace Api.Controllers
 {
     [Route("api/genres")]
     [ApiController]

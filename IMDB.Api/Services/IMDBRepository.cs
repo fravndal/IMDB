@@ -3,12 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Domain;
-using IMDB.Api.Helpers;
-using IMDB.Api.Models;
+using Api.Helpers;
+using Api.Models;
 using Microsoft.EntityFrameworkCore;
 using Persistence;
 
-namespace IMDB.Api.Services
+namespace Api.Services
 {
     public class IMDBRepository : IIMDBRepository
     {

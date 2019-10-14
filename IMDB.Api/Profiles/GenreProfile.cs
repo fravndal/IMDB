@@ -1,13 +1,13 @@
 ﻿using AutoMapper;
 using Domain;
-using IMDB.Api.Helpers;
-using IMDB.Api.Models;
+using Api.Helpers;
+using Api.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace IMDB.Api.Profiles
+namespace Api.Profiles
 {
     public class GenreProfile : Profile
     {

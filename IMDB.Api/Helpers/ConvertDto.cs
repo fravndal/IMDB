@@ -1,13 +1,8 @@
 ﻿using Domain;
-using IMDB.Api.Models;
-using IMDB.Api.Services;
-using Persistence;
-using System;
+using Api.Models;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
-namespace IMDB.Api.Helpers
+namespace Api.Helpers
 {
     public static class ConvertDto
     {

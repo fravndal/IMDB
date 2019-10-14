@@ -11,10 +11,17 @@ namespace Persistence
 
 
         public IMDBDbContext(DbContextOptions<IMDBDbContext> options) : base(options)
-        { }
+        { Database.Migrate(); }
 
         public IMDBDbContext()
         { }
+
+        protected override void OnConfiguring(DbContextOptionsBuilder options)
+        {
+            DbConnection db = new DbConnection();
+            string connString = db.GetDbString();
+            options.UseSqlServer(connString);
+        }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

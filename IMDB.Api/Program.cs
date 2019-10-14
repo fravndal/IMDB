@@ -1,8 +1,8 @@
 ﻿using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
-using NLog.Web;
+using NLog;
 
-namespace IMDB.Api
+namespace Api
 {
     public class Program
     {
@@ -13,7 +13,6 @@ namespace IMDB.Api
 
         public static IWebHostBuilder CreateWebHostBuilder(string[] args) =>
             WebHost.CreateDefaultBuilder(args)
-                .UseStartup<Startup>()
-                .UseNLog();
+                .UseStartup<Startup>();
     }
 }

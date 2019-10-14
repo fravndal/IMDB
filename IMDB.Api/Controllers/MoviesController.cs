@@ -1,14 +1,13 @@
 ﻿using System.Collections.Generic;
-using IMDB.Api.Models;
-using IMDB.Api.Services;
+using Api.Models;
 using Microsoft.AspNetCore.Mvc;
 using AutoMapper;
-using System;
 using Microsoft.Extensions.Logging;
-using IMDB.Api.Helpers;
+using Api.Helpers;
 using Microsoft.AspNetCore.Routing;
+using Api.Services;
 
-namespace IMDB.Api.Controllers
+namespace Api.Controllers
 {
     [Route("api/movies")]
     public class MoviesController : ControllerBase
