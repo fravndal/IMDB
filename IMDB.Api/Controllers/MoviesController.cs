@@ -13,14 +13,14 @@ namespace IMDB.Api.Controllers
     [Route("api/movies")]
     public class MoviesController : ControllerBase
     {
-        private IIMDBRepository _iIMDBRepository;
+        private IIMDBRepository _repository;
         protected readonly LinkGenerator _linkGenerator;
         private readonly IMapper _mapper;
         private ILogger<MoviesController> _logger;
 
-        public MoviesController(IIMDBRepository iMDBRepository, LinkGenerator linkGenerator, IMapper mapper, ILogger<MoviesController> logger)
+        public MoviesController(IIMDBRepository repository, LinkGenerator linkGenerator, IMapper mapper, ILogger<MoviesController> logger)
         {
-            _iIMDBRepository = iMDBRepository;
+            _repository = repository;
             _linkGenerator = linkGenerator;
             _mapper = mapper;
             _logger = logger;
@@ -31,7 +31,7 @@ namespace IMDB.Api.Controllers
         [HttpGet(Name = "GetMovies")]
         public IActionResult GetMovies(MoviesResourceParameters moviesResourceParameters)
         {
-            var moviesFromRepo = _iIMDBRepository.GetMovies(moviesResourceParameters);
+            var moviesFromRepo = _repository.GetMovies(moviesResourceParameters);
 
             var previousPageLink = moviesFromRepo.HasPrevious ?
                 CreateMoviesResourceUri(moviesResourceParameters, 
@@ -53,6 +53,16 @@ namespace IMDB.Api.Controllers
 
             Response.Headers.Add("X-Pagination",
                 Newtonsoft.Json.JsonConvert.SerializeObject(paginationMetadata));
+
+            var movies = _mapper.Map<IEnumerable<MovieDto>>(moviesFromRepo);
+
+            return Ok(movies);
+        }
+
+
+        public IActionResult GetMovies()
+        {
+            var moviesFromRepo = _repository.GetMovies();
 
             var movies = _mapper.Map<IEnumerable<MovieDto>>(moviesFromRepo);
 
@@ -97,7 +107,7 @@ namespace IMDB.Api.Controllers
         [HttpGet("{id}")]
         public IActionResult GetMovie(int id)
         {
-            var movieFromRepo = _iIMDBRepository.GetMovie(id);
+            var movieFromRepo = _repository.GetMovie(id);
             if (movieFromRepo == null)
             {
                 return NotFound();

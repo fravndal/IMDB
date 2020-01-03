@@ -10,7 +10,8 @@ namespace IMDB.Api.Services
     public interface IIMDBRepository
     {
         PagedList<Movie> GetMovies(MoviesResourceParameters moviesResourceParameters);
-        
+        IEnumerable<Movie> GetMovies();
+
         Movie GetMovie(int id);
         IEnumerable<Genre> GetGenres();
         Genre GetGenre(int id);

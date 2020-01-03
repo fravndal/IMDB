@@ -20,6 +20,10 @@ using Microsoft.AspNetCore.Mvc.Formatters;
 using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.AspNetCore.Mvc.Routing;
 using Microsoft.AspNetCore.Mvc.Infrastructure;
+using GraphQL;
+using GraphQL.Server;
+using GraphQL.Server.Ui.Playground;
+using IMDB.Api.GraphQL;
 
 namespace IMDB.Api
 {
@@ -47,20 +51,6 @@ namespace IMDB.Api
             // register the repository
             services.AddScoped<IIMDBRepository, IMDBRepository>();
 
-            //services.AddSingleton<IActionContextAccessor, ActionContextAccessor>();
-            /*services.AddScoped<IUrlHelper, UrlHelper>(implementationFactory =>
-            {
-                var actionContext = implementationFactory.GetService<IActionContextAccessor>().ActionContext;
-                return new UrlHelper(actionContext);
-            });*/
-
-            /*services.AddScoped<IUrlHelper>(implementationFactory =>
-            {
-                var actionContext = implementationFactory.GetService<IActionContextAccessor>()
-                .ActionContext;
-                return new UrlHelper(actionContext);
-            });*/
-
             // register the automapper
             var mappingConfig = new MapperConfiguration(mc =>
             {
@@ -72,14 +62,9 @@ namespace IMDB.Api
             IMapper mapper = mappingConfig.CreateMapper();
             services.AddSingleton(mapper);
 
-            //Logging config
-            /*services.AddLogging(loggingBuilder =>
-            {
-                loggingBuilder.AddConfiguration(Configuration.GetSection("Logging"));
-                loggingBuilder.AddConsole();
-                loggingBuilder.AddDebug();
-            });*/
-
+            services.AddScoped<IDependencyResolver>(s => new FuncDependencyResolver(s.GetRequiredService));
+            services.AddScoped<IMDBSchema>();
+            services.AddGraphQL(o => { o.ExposeExceptions = true; }).AddGraphTypes(ServiceLifetime.Scoped);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -114,10 +99,8 @@ namespace IMDB.Api
                 });
             }
 
-            
-
-
-
+            app.UseGraphQL<IMDBSchema>();
+            app.UseGraphQLPlayground(new GraphQLPlaygroundOptions());
             app.UseHttpsRedirection();
             app.UseMvc();
         }

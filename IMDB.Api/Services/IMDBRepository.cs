@@ -13,10 +13,12 @@ namespace IMDB.Api.Services
     public class IMDBRepository : IIMDBRepository
     {
         private IMDBDbContext _context;
+        //private IIMDBRepository _repository;
 
-        public IMDBRepository(IMDBDbContext context)
+        public IMDBRepository(IMDBDbContext context/*, IIMDBRepository repository*/)
         {
             _context = context;
+            //_repository = repository;
         }
 
         public PagedList<Movie> GetMovies(MoviesResourceParameters moviesResourceParameters)
@@ -55,6 +57,13 @@ namespace IMDB.Api.Services
                 
                 
                 //check out lazy loading
+        }
+
+        public IEnumerable<Movie> GetMovies()
+        {
+            return _context.Movies
+                .Take(20);
+               
         }
 
         
