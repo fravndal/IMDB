@@ -34,11 +34,18 @@ namespace IMDB.Api
             Configuration = configuration;
         }
 
+        readonly string MyAllowSpecificOrigins = "_myAllowSpcificOrigins";
+
         public IConfiguration Configuration { get; }
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddCors(o => o.AddPolicy(MyAllowSpecificOrigins, builder =>
+            {
+                builder.WithOrigins("https://localhost:5001/graphql", "https://localhost:3000").AllowAnyHeader().AllowAnyMethod();
+            }));
+
             services.AddMvc(setupAction =>
             {
                 setupAction.ReturnHttpNotAcceptable = true;
@@ -99,6 +106,7 @@ namespace IMDB.Api
                 });
             }
 
+            app.UseCors(MyAllowSpecificOrigins);
             app.UseGraphQL<IMDBSchema>();
             app.UseGraphQLPlayground(new GraphQLPlaygroundOptions());
             app.UseHttpsRedirection();
